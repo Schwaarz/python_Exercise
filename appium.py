@@ -2,6 +2,15 @@ import uiautomator2 as u2
 
 d = u2.connect()
 
+#修改延迟为操作前延迟 2S 操作后延迟 0S
+d.settings['operation_delay'] = (2,0)
+#修改延迟生效方法
+d.settings['operation_delay_methods'] = ['click','press','send_keys']
+# 修改默认等待
+d.settings['wait_timeout'] = 10
+# 输出全局设置信息
+print(d.settings)
+
 # a = d(description=" 会议").exists
 # b = True
 # print(a)
@@ -44,14 +53,15 @@ def xwTest():
     print('人大会议tab新闻跳转正常')
 
 def RdlzTest():
-    d.click(246, 1380)
-    d(description="发布动态 ").click()
-    d(text="这一刻的想法……").click()
-    d.send_keys("简单的测试", clear=True)
-    d.click(364, 771)
-    d(description="确定 ").click()
+    d.click(673, 456) # 点击发布动态
+    d(text="这一刻的想法……").send_keys("试试") # 输入动态文字
+    d.click(155, 496)   # 点击上传
+    d.click(375, 148)   # 点击图片
+    d.click(763, 80)    # 确定上传
+    d.click(725, 95)    # 点击发布
 
 
 
-#RdlzTest()
-xwTest()
+
+RdlzTest()
+#xwTest()
