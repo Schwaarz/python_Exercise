@@ -18,7 +18,6 @@ print(d.settings)
 #     print(b)
 
 # d(description=" 会议").click()
-
 # d(description=" ").click()
 # d(description=" 知识库").click()
 # d(description=" 我的").click()
@@ -53,15 +52,31 @@ def xwTest():
     print('人大会议tab新闻跳转正常')
 
 def RdlzTest():
+    d(description=" 人大履职").click()  # 点击人大履职
     d.click(673, 456) # 点击发布动态
-    d(text="这一刻的想法……").send_keys("试试") # 输入动态文字
+    d(text="这一刻的想法……").send_keys("简单的测试，发布一条新动态") # 输入动态文字
     d.click(155, 496)   # 点击上传
     d.click(375, 148)   # 点击图片
     d.click(763, 80)    # 确定上传
     d.click(725, 95)    # 点击发布
+    d(description=" ").click()  # 点击中心
+
+def HyTest():
+    d.click(487, 1147) # 点击第一个会议
+    d(description="签到").click() # 点击进入签到页面
+    d.xpath('//*[@content-desc="光明人大"]/android.view.View[6]/android.view.View[1]').click()  # 点击签到
+
+def loginTest():
+    d(description=" 会议").click()
+    d(text="输入手机号").send_keys("15766471748")
+    d(text="请输入验证码").send_keys("gmrd2019")
+    d.click(155, 1038)
+    d(description="登录").click()
 
 
 
 
-RdlzTest()
+loginTest()
+#HyTest()
+#RdlzTest()
 #xwTest()
