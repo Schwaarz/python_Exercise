@@ -1,10 +1,14 @@
 import uiautomator2 as u2
-
-d = u2.connect()
-
-#修改延迟为操作前延迟 2S 操作后延迟 0S
+import os
+# 打开MM模拟器
+cmd = "adb connect 127.0.0.1:7555 "
+os.system(cmd)
+d = u2.connect("127.0.0.1:7555")
+# 启动GMRD应用
+d.app_start('com.guopeiyu.rmo',stop=True)
+# 修改延迟为操作前延迟 2S 操作后延迟 0S
 d.settings['operation_delay'] = (2,0)
-#修改延迟生效方法
+# 修改延迟生效方法
 d.settings['operation_delay_methods'] = ['click','press','send_keys']
 # 修改默认等待
 d.settings['wait_timeout'] = 10
@@ -67,12 +71,11 @@ def HyTest():
     d.xpath('//*[@content-desc="光明人大"]/android.view.View[6]/android.view.View[1]').click()  # 点击签到
 
 def loginTest():
-    d(description=" 会议").click()
+    d(description=" 我的").click()
     d(text="输入手机号").send_keys("15766471748")
     d(text="请输入验证码").send_keys("gmrd2019")
     d.click(155, 1038)
     d(description="登录").click()
-
 
 
 
