@@ -1,9 +1,36 @@
 from tkinter import *
 
+from airtest.core.api import *
+ST.PROJECT_ROOT = "D:/airtest work/games"
+using("tianmingzhizi.air")
+from tianmingzhizi import Let_tai,CS_migong,HD_dixia,DX_migong,Tan_suo,MOJIE_wenquan,GS_dixa,SJ_boos2,devices
+# 日志类
+class Logger(object):
+    def __init__(self, filename='default.txt', stream=sys.stdout):
+        self.terminal = stream
+        self.log = open(filename, 'w')
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+
+    def flush(self):
+        pass
+
+sys.stdout = Logger('default.txt', sys.stdout)
+sys.stderr = Logger('default.txt', sys.stderr)
+# 实例化日志类对象并初始化
+# log = Logger()
+# log.__init__()
 # 创建窗口并给窗口设置标题
 window = Tk()
 window.geometry("350x200")
 window.title("天命之子每日清扫脚本")
+col_count, row_count = window.grid_size()
+for col in range(col_count):
+    window.grid_columnconfigure(col, minsize=20)
+for row in range(row_count):
+    window.grid_rowconfigure(row, minsize=20)
 # 创建标签组件，设置其在窗口的位置
 lbl = Label(window, text="请勾选需要的功能，可勾选多个同时进行")
 lbl.grid(column=1, row=0)

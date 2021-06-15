@@ -10,7 +10,7 @@ urllib3.disable_warnings()
 
 
 def api():
-    url = 'https://api.66mz8.com/api/rand.tbimg.php'  # 请求接口并返回URL
+    url = 'https://api.vvhan.com/api/tao'  # 请求接口并返回URL
     return url
 
 
