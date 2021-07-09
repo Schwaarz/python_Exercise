@@ -1,5 +1,5 @@
 #面向对象
-from selenium import webdriver
+from seleniumdemo import webdriver
 from time import  sleep
 #Test这个类，
 class Test():

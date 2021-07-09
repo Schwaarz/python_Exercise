@@ -1,0 +1,5 @@
+url = 'http://a508.wkuai.cc'
+username = '//*[@id="app"]/div/div[1]/div[2]/div/div/form/div[3]/div/div/div/input'
+password = '//*[@id="app"]/div/div[1]/div[2]/div/div/form/div[4]/div/div/div/input'
+login_btn = '//*[@id="app"]/div/div[1]/div[2]/div/div/form/button'
+tips = '//*[@id="panelContent"]/div/div/div/div[1]/div[1]/div[1]/span'

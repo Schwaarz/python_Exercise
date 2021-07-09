@@ -57,25 +57,25 @@ print(num3)
 
 path = "d:/pic/"
 
-# def baocun():
-#     for index, item in enumerate(api2()):
-#         if item:
-#             html = requests.get(api2())  # get函数获取图片链接地址，requests发送访问请求
-#             str2 = random.randrange(999999)
-#             img_name = path + str(index + str2) + '.jpg'
-#             with open(img_name, 'wb') as file:  # 以byte形式将图片数据写入
-#                 file.write(html.content)
-#                 file.flush()
-#             file.close()  # 关闭文件
-#             print('第%d张图片下载完成' % (index + str2))
-#             time.sleep(1)  # 自定义延时
-#
-#
-#
-# while True:
-#     try:
-#         baocun()
-#     except BaseException as b:
-#             print(b)
-#             print('抓取完成')
+def baocun():
+    for index, item in enumerate(api2()):
+        if item:
+            html = requests.get(api2())  # get函数获取图片链接地址，requests发送访问请求
+            str2 = random.randrange(999999)
+            img_name = path + str(index + str2) + '.jpg'
+            with open(img_name, 'wb') as file:  # 以byte形式将图片数据写入
+                file.write(html.content)
+                file.flush()
+            file.close()  # 关闭文件
+            print('第%d张图片下载完成' % (index + str2))
+            time.sleep(1)  # 自定义延时
+
+
+
+while True:
+    try:
+        baocun()
+    except BaseException as b:
+            print(b)
+            print('抓取完成')
 
