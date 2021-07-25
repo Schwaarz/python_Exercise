@@ -13,6 +13,9 @@ class BaiduTest(unittest.TestCase):
 class sunnyTest(unittest.TestCase):
     def test01(self):
         self.assertEqual(search.sunny_login('内审员','htsunny123'),'待审批客户')
+class sinitekwhTest(unittest.TestCase):
+    def test01(self):
+        self.assertEqual(search.sinitekwh_login('admin','111'),'个人中心')
 if __name__ == '__main__':
     unittest.main()
 

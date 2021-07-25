@@ -1,10 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
-from seleniumdemo.Page_Object import baidupage,sunnypage
+from seleniumdemo.Page_Object import baidupage,sunnypage,sinitekwhpage
 
 driver = webdriver.Chrome()
-driver.get(sunnypage.url)
+driver.get(sinitekwhpage.url)
 
 def baidu_search(string):
     driver.find_element_by_id(baidupage.search).send_keys(string)
@@ -36,3 +36,14 @@ def sunny_login(username,password):
     time.sleep(3)
     text = driver.find_element_by_xpath(sunnypage.tips).text
     return text
+
+def sinitekwh_login(username,password):
+    time.sleep(3)
+    driver.find_element_by_xpath(sinitekwhpage.username).send_keys(username)
+    driver.find_element_by_xpath(sinitekwhpage.password).send_keys(password)
+    driver.find_element_by_xpath(sinitekwhpage.login_btn).click()
+    time.sleep(3)
+    text = driver.find_element_by_xpath(sinitekwhpage.tips).text
+    return text
+
+
