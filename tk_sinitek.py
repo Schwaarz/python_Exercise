@@ -11,7 +11,7 @@ root.title("一键部署")
 # 获取屏幕高度宽度
 screenWidth = root.winfo_screenwidth()
 screenHeight = root.winfo_screenheight()
-w = 700
+w = 810
 h = 350
 x = (screenWidth - w) / 2
 y = (screenHeight - h) / 2
@@ -34,6 +34,14 @@ old_frontendpath.grid(column=1, row=0)
 old_backendpath.grid(column=1, row=2)
 new_frontendpath.grid(column=1, row=1)
 new_backendpath.grid(column=1, row=3)
+text = "操作说明：\n" \
+       "1、本工具一旦点击执行，将不可逆，请仔细检查各项参数填写是否正确\n" \
+       r"2、部署包文件路径实例：C:\Users\yinguohao\Downloads\国信应用包\broker.war" \
+       "\n3、可以使用broker.war，工具会自动重命名并解压\n" \
+       r"4、服务器文件路径实例：D:\\apache-tomcat-8.5.61\webapps\ROOT" \
+       "\n5、所有参数不能为空，为空则执行不了，后续版本迭代"
+msg = Message(root, text=text, width="400", bg="yellow")
+msg.grid(column=1, row=7)
 
 
 def del_file(filepath):
@@ -111,36 +119,43 @@ def progressnbar_show():
     num += 1
 
 
+# 帮助-关于
 def menutips():
     messagebox.showinfo("关于", "作者：gh.yin\n"
                               "版本：1.0.0.0"
-                              )
+                        )
+
+
+# 帮助-联系作者
+def menutips_two():
+    messagebox.showinfo("微信号", "QQ2071419073")
+
 
 def dy_list():
-    # frontend_filepath = old_frontendpath.get()
-    # backend_filepath = old_backendpath.get()
-    # frontend_src_dir = new_frontendpath.get()
-    # frontend_dst_dir = old_frontendpath.get()
-    # backend_dst_dir = old_backendpath.get()
-    # rename = new_backendpath.get()
-    # rename2 = rename.replace("broker.war", "ROOT.zip")  # 替换名称，获取同一路径，提供给重命名函数的传参
-    # rename3 = rename2.replace("ROOT.zip", "ROOT")  # 替换名称，获取同一路径，提供给解压、复制的函数的传参
-    # del_file(frontend_filepath)  # 删除服务器前端文件
-    # del_file(backend_filepath)  # 删除服务器后端文件
-    # re_filename(rename, rename2)  # 部署包后端文件重命名 C:\Users\yinguohao\Downloads\国信应用包\broker.war
-    # unzip(rename2, rename3)  # 解压后端部署包
-    # copy_file(frontend_src_dir, frontend_dst_dir)  # 复制部署包文件到服务器-前端 C:\Users\yinguohao\Downloads\国信应用包\dist
-    # copy_file(rename3, backend_dst_dir)   # 复制部署包文件到服务器-后端
+    frontend_filepath = old_frontendpath.get()
+    backend_filepath = old_backendpath.get()
+    frontend_src_dir = new_frontendpath.get()
+    frontend_dst_dir = old_frontendpath.get()
+    backend_dst_dir = old_backendpath.get()
+    rename = new_backendpath.get()
+    rename2 = rename.replace("broker.war", "ROOT.zip")  # 替换名称，获取同一路径，提供给重命名函数的传参
+    rename3 = rename2.replace("ROOT.zip", "ROOT")  # 替换名称，获取同一路径，提供给解压、复制的函数的传参
+    del_file(frontend_filepath)  # 删除服务器前端文件
+    del_file(backend_filepath)  # 删除服务器后端文件
+    re_filename(rename, rename2)  # 部署包后端文件重命名 C:\Users\yinguohao\Downloads\国信应用包\broker.war
+    unzip(rename2, rename3)  # 解压后端部署包
+    copy_file(frontend_src_dir, frontend_dst_dir)  # 复制部署包文件到服务器-前端 C:\Users\yinguohao\Downloads\国信应用包\dist
+    copy_file(rename3, backend_dst_dir)  # 复制部署包文件到服务器-后端
     progressnbar_show()
 
 
+menubar = Menu(root)  # 菜单
+filemenubar = Menu(menubar, tearoff=False)  # 下拉菜单
+menubar.add_cascade(label='帮助', menu=filemenubar)  # 一级
+filemenubar.add_command(label='联系作者', command=menutips_two)  # 二级
+filemenubar.add_command(label='关于', command=menutips)  # 二级
+root.config(menu=menubar)  # 菜单回显
 
-menubar = Menu(root)
-filemenubar = Menu(menubar, tearoff=False)
-menubar.add_cascade(label='帮助', menu=filemenubar)
-filemenubar.add_command(label='联系作者')
-filemenubar.add_command(label='关于', command=menutips)
-root.config(menu=menubar)
-btn = Button(root, text="点击即可一键部署（仅替换文件，不启动服务）！！！", command=dy_list)
+btn = Button(root, text="点击即可替换文件（服务需手动启停）", command=dy_list)
 btn.grid(column=1, row=4)
 root.mainloop()
