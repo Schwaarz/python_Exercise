@@ -1,5 +1,5 @@
 # 链接
-url = 'http://kxnzue.natappfree.cc/#/report/reportdetail'
+url = 'http://192.168.117.129/#/dashboard'
 # 账号
 username = '/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[2]/form[1]/div[2]/div[1]/div[1]/input[1]'
 # 密码

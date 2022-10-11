@@ -4,19 +4,27 @@ from io import BytesIO
 import urllib3
 import os
 import threading
-
+import ip
+import seleniumsetu
+import time
 urllib3.disable_warnings()
-
+header = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36 Edg/81.0.416.64'
+}
+proxies = {
+    'http': 'HTTP://183.64.239.19:8060'
+}
 
 
 def api():
-    url = 'https://api.vvhan.com/api/tao'  # 请求接口并返回URL
+    #  url = 'https://api.vvhan.com/api/tao'  # 请求接口并返回URL
+    url = seleniumsetu.link()
     return url
 
 
 def api2():
-    ret = requests.get(api(), verify=False)  # 关闭https证书警告
-    str_1 = ret.headers['x-nws-log-uuid']  # 拿到headers的x-new-log-uuid存储在str_1中
+    ret = requests.get(api(), verify=False, proxies=proxies, headers=header)  # 关闭https证书警告
+    str_1 = ret.headers['Ali-Swift-Global-Savetime']  # 拿到headers的eagleid存储在str_1中
     return str_1  # 返回str_1的值
 
 
@@ -32,16 +40,21 @@ def pic():  # 解析响应并返回图片数据
         return image
     except BaseException as a:
         print(a)    # 打印异常
+        if pic() != None:
+            pic()
 
 
 def pic_cun():  # 循环给图片命名
     while True:
+        if pic() != 'None':
+            pic().save('d:/pic/' + api2() + '.png')  # 保存为Png格式
         try:
-            pic().save('d:/pic/' + api2() + '.Png')  # 保存为Png格式
-        except BaseException as b:
-            print(b)
+            pic().save(pic(), "JPEG")
+        except AttributeError:
+            print("Couldn't save image {}".format(pic()))
             pic().save('d:/pic/' + api2() + '.jpg')  # 异常处理，保存为JPG格式
-
+for a in range(1,10):
+    pic_cun()
 
 def pic_name():
     path = r"d:/pic/"  # 图片路径
@@ -50,17 +63,18 @@ def pic_name():
         os.rename(os.path.join(path, file), os.path.join(path + str(num)) + '.png')
         num = num + 1
 
+# while True:
+#     timer = threading.Timer(5, api())  # 定时5秒访问函数
+#     pic_cun()
+#     try:
+#         timer = threading.Timer(5, pic())   # 定时5秒访问函数
+#         time.sleep(2)
+#         pic_cun()
+#     except BaseException as c:
+#         print(c)
+#     timer.start()
+#     timer.join()
 
-while True:
-    timer = threading.Timer(5, api())  # 定时5秒访问函数
-    try:
-        timer = threading.Timer(5, pic())   # 定时5秒访问函数
-    except BaseException as c:
-        print(c)
-        pic()   # 异常处理，无须定时即可访问
-    pic_cun()   # 调用保存图片函数
-    timer.start()
-    timer.join()
 # pic_name()  # 调用图片重命名函数
 
 

@@ -1,6 +1,9 @@
 import unittest
 from seleniumdemo.Business import search
 # 使用unittest进行断言
+from seleniumdemo.Data import login_data
+
+
 class BaiduTest(unittest.TestCase):
     def test01(self):
         self.assertEqual(search.baidu_search('QQ邮箱'), 'QQ邮箱_百度搜索')
@@ -15,7 +18,7 @@ class sunnyTest(unittest.TestCase):
         self.assertEqual(search.sunny_login('内审员','htsunny123'),'待审批客户')
 class sinitekwhTest(unittest.TestCase):
     def test01(self):
-        self.assertEqual(search.sinitekwh_login('admin','111'),'个人中心')
+        self.assertEqual(login_data.login_data(),'个人中心')
 if __name__ == '__main__':
     unittest.main()
 

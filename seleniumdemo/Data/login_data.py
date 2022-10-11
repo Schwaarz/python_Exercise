@@ -1,7 +1,7 @@
-import xlrd
+import xlrd2
 from seleniumdemo.Business import search
 def login_data():
-    workbook = xlrd.open_workbook('C:\\Users\\yinguohao\\Downloads\\测试账号表.xlsx')
+    workbook = xlrd2.open_workbook('C:\\Users\\yinguohao\\Downloads\\测试账号表.xlsx')
     sheet = workbook.sheet_by_name("Sheet1")
     rows = sheet.nrows
     data1 = []
@@ -13,5 +13,5 @@ def login_data():
         # print(str(data1[a][0]))
 
 
-
-print(login_data())
+login_data()
+# print(login_data())

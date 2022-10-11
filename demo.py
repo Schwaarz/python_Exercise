@@ -1,7 +1,6 @@
 import datetime
 import time
 from io import BytesIO
-
 import requests
 import urllib3
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -23,8 +22,6 @@ if __name__ == '__main__':
 
     while True:
         print(time.time())
-
-
         def getimage(ret):  # 响应请求的数据并返回
             response = requests.get(ret)
             return response
