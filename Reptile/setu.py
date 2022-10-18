@@ -3,10 +3,8 @@ from PIL import Image
 from io import BytesIO
 import urllib3
 import os
-import threading
-import ip
 import seleniumsetu
-import time
+
 urllib3.disable_warnings()
 header = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36 Edg/81.0.416.64'
@@ -73,7 +71,6 @@ def pic_name():
 #     except BaseException as c:
 #         print(c)
 #     timer.start()
-#     timer.join()
 
 # pic_name()  # 调用图片重命名函数
 
