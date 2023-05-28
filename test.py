@@ -1,4 +1,8 @@
 
+
+def sum(a,b):
+    return a+b
+
 # name=15360059852
 # name='深圳';
 # name='21岁';

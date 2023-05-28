@@ -1,7 +1,9 @@
+#url
+url='https://www.baidu.com/'
 # 百度搜索元素
 search = 'kw'
 # 搜索结果按钮元素
-click = '//*[@id="1"]/h3/a[1]'
+click = '/html/body/div[2]/div[3]/div[1]/div[3]/div[1]/div/div[1]/h3/a[1]'
 # QQ邮箱登录框架
 iframe = '//*[@id="login_frame"]'
 # 账号元素

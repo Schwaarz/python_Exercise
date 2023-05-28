@@ -33,7 +33,7 @@ def se_tu():
             pass
         continue
 
-
+# 多线程下载
 class MyThread(threading.Thread):
     def run(self):
         for i in range(5):

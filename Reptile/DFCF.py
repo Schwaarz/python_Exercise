@@ -1,8 +1,10 @@
 import io
+import multiprocessing
 import os
 import re
 import time
 
+import pyautogui as pyautogui
 import requests
 from PyPDF2 import PdfFileMerger
 from bs4 import BeautifulSoup
@@ -10,14 +12,19 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
+driver_width, driver_height = pyautogui.size()    # 通过pyautogui方法获得屏幕尺寸
 chrome_options = Options()
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
+chrome_options.add_argument('--window-size=%sx%s' % (driver_width, driver_height)); #浏览器满屏
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-driver.get('https://data.eastmoney.com/report/orgpublish.jshtml?orgcode=80000007')
+# 国信
+# driver.get('https://data.eastmoney.com/report/orgpublish.jshtml?orgcode=80000007')
+# 中航
+driver.get('https://data.eastmoney.com/report/orgpublish.jshtml?orgcode=80000197')
 # 翻页获取网页源代码，获取5页
 data_all = ''
-for i in range(3):
+for i in range(1):
     driver.find_element("xpath", '//*[@id="gotopageindex"]').clear()
     driver.find_element("xpath", '//*[@id="gotopageindex"]').send_keys(i + 1)
     driver.find_element("xpath", '//*[@id="orgpublish_table_pager"]/div[2]/form/input[2]').click()
@@ -50,27 +57,40 @@ def download_pdf(save_path, pdf_name, pdf_url, pdf_date):
         print(pdf_date + '%s.PDF,下载成功！' % (pdf_name))
 
 
+
 # 下载东方财富研报
-def Guosen_download():
+def Guosen_download(alist):
     for a in link3:
         for i in a:
-            sort_url = re.findall('"(.*?)"', str(i))  # 提取短网址
-            YB_title = re.findall(r'>(.*?)</a>', str(i))  # 提取研报标题
+            # 提取短网址
+            sort_url = re.findall('"(.*?)"', str(i))
+            # 提取研报标题
+            YB_title = re.findall(r'>(.*?)</a>', str(i))
+            # 去除特殊字符，只保留汉字，字母，数字
             title = re.sub(u"([^\u4e00-\u9fa5\u0030-\u0039\u0041-\u005a\u0061-\u007a])", "",
-                           str(YB_title))  # 去除特殊字符，只保留汉字，字母，数字
-            url = 'https://data.eastmoney.com'  # 网址头
-            report_url = url + sort_url[0]  # 拼接循环输出完整链接
+                           str(YB_title))
+            # 网址头
+            url = 'https://data.eastmoney.com'
+            # 拼接循环输出完整链接
+            report_url = url + sort_url[0]
             driver.get(report_url)
             data2 = driver.page_source
             soup2 = BeautifulSoup(data2, 'html.parser')
-            pdf = soup2.find_all(href=re.compile("https://pdf"))  # 过滤PDF下载链接
-            pdf_url = pdf[0]['href']  # 提取PDF地址
-            date = soup2.find_all('span', id='publish-date')  # 提取研报日期
-            date2 = re.findall(r'>(.*?)</span>', str(date))  # 正则过滤
+            # 过滤PDF下载链接
+            pdf = soup2.find_all(href=re.compile("https://pdf"))
+            # 提取PDF地址
+            pdf_url = pdf[0]['href']
+            driver.get(pdf_url)
+            # 提取研报日期
+            date = soup2.find_all('span', id='publish-date')
+            # 正则过滤
+            date2 = re.findall(r'>(.*?)</span>', str(date))
+            # 正则过滤
             pdf_date = re.sub(u"([^\u4e00-\u9fa5\u0030-\u0039\u0041-\u005a\u0061-\u007a])", "",
-                              str(date2))  # 正则过滤
+                              str(date2))
             save_path = 'D:/DFCF/'
-            download_pdf(save_path, title, pdf_url, pdf_date)  # 调用下载函数
+            # 调用下载函数
+            download_pdf(save_path, title, pdf_url, pdf_date)
 
 
 # 拼接PDF成大PDF
@@ -83,5 +103,12 @@ def pdf_pj():
         file_merger.append(pdf)  # 合并pdf文件
     file_merger.write("C:/Users/yinguohao/Downloads/guosenYB.pdf")
 
-
-Guosen_download()
+if __name__ == "__main__":
+    start_time = time.time()
+    pool = multiprocessing.Pool(processes=6)
+    alist = [1,2]
+    pool.map(Guosen_download, alist)
+    end_time = time.time()
+    total_time = end_time - start_time
+    print(str(total_time))
+# pdf_pj()
